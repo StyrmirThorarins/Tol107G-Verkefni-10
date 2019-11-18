@@ -1,4 +1,6 @@
-// todo vísa í rétta hluti með import
+import * as helpersModule from './helpers';
+import * as nasaModule from './nasa-api';
+import * as storageModule from './storage';
 
 // breytur til þess að halda utan um html element nodes
 let title; // titill fyrir mynd á forsíðu
@@ -7,12 +9,28 @@ let img; // mynd á forsíðu
 
 let image; // object sem inniheldur núverandi mynd á forsíðu.
 
+function outputMessage(message) {
+  const resultsDiv = document.querySelector('.results');
+  const errorMessageNode = document.createTextNode(message);
+  resultsDiv.appendChild(errorMessageNode);
+}
+
 /*
  * Sækir nýja Mynd af handahófi frá Nasa API og birtir hana á forsíðunni
  * ásamt titli og texta.
  */
 function getNewImage() {
+  console.log('getnewImage()');
 
+  nasaModule.default().then((data) => {
+    if (data.length === 0) {
+      console.log('No data retrieved from NASA.');
+    } else if (data !== null) {
+      console.log('data found', data);
+    } else {
+      console.log('Error getting data.');
+    }
+  });
 }
 
 /*
@@ -27,7 +45,9 @@ function saveCurrentImage() {
  *
  */
 export default function init(apod) {
-
+  document.getElementById('new-image-button').addEventListener('click', getNewImage);
+  document.getElementById('save-image-button').addEventListener('click', saveCurrentImage);
+  document.body.getElementsByTagName('a')[0].addEventListener('click', loadFavourites);
 }
 
 /*
@@ -37,3 +57,4 @@ export default function init(apod) {
 export function loadFavourites() {
 
 }
+

@@ -5,6 +5,7 @@ module.exports = {
   },
   rules: {
     'no-console': ['error', { allow: ['info', 'warn', 'error'] }],
+    'no-console': 'off',
   },
   plugins: ['import'],
 };
