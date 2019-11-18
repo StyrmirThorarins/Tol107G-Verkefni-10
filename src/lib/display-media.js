@@ -27,6 +27,10 @@ function getNewImage() {
       console.log('No data retrieved from NASA.');
     } else if (data !== null) {
       console.log('data found', data);
+
+      document.querySelector('.apod__image').setAttribute('src', data.hdurl);
+      document.querySelector('.apod__title').innerText = data.title;
+      document.querySelector('.apod__text').innerText = data.explanation;
     } else {
       console.log('Error getting data.');
     }
