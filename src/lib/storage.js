@@ -15,7 +15,7 @@ const LOCALSTORAGE_KEY = 'favourite_spacephotos';
  * @returns {array} fylki af myndum eða tóma fylkið ef ekkert vistað.
  */
 export function load() {
-  //son  localStorage.clear();
+  // localStorage.clear();
   console.log('localStorage', localStorage);
 
   const savedMedia = [];
@@ -47,7 +47,7 @@ export function save(type, mediaUrl, text, title) {
   const position = localStorage.length + 1;
 
   // json example {"firstName":"John", "lastName":"Doe"},
-  localStorage.setItem(`${LOCALSTORAGE_KEY}-${position}`, `{'type':'${type}','mediaUrl:'${mediaUrl}','text':"${text}", 'title':'${title}'}`);
+  localStorage.setItem(`${LOCALSTORAGE_KEY}-${position}`, `'mediaitem': {'type':'${type}','mediaUrl:'${mediaUrl}','text':"${text}", 'title':'${title}'}`);
 
   /*
   localStorage.setItem(`${LOCALSTORAGE_KEY}-type-${position}`, type);
