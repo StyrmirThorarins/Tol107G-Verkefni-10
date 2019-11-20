@@ -24,7 +24,24 @@ export default async function getRandomImage() {
   const result = await fetch(requestURL);
 
   if (result.status !== 200) {
-    console.error('Non 200 status');
+    console.error('Non 200 status on connecting to NASA server.');
+  } else {
+    data = await result.json();
+  }
+
+  return data;
+}
+
+export async function getImageByDate(date) {
+  const requestURL = `${URL}?api_key=${API_KEY}&date=${date}`;
+  console.log('requestURL: ', requestURL);
+
+  let data = null;
+
+  const result = await fetch(requestURL);
+
+  if (result.status !== 200) {
+    console.error('Non 200 status on connecting to NASA server.');
   } else {
     data = await result.json();
   }
