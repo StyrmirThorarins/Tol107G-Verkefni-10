@@ -14,22 +14,22 @@ let image; // object sem inniheldur núverandi mynd á forsíðu.
 function removeMediaNode(apodNode) {
   try {
     apodNode.querySelector('.apod__image').remove();
-  } catch {
+  } catch (e) {
     console.log('No image found to remove.');
   }
 
   try {
     apodNode.querySelector('div').remove();
-  } catch {
+  } catch (e) {
     console.log('No video found to remove.');
-  }    
+  }
 }
 
 /*
  * Sækir nýja Mynd af handahófi frá Nasa API og birtir hana á forsíðunni
  * ásamt titli og texta.
  */
-function getNewImage() {  
+function getNewImage() {
   nasaModule.default().then((data) => {
     if (data === null) {
       console.log('No data retrieved from NASA.');
@@ -50,7 +50,6 @@ function getNewImage() {
         const imageNode = helpersModule.el('img');
         imageNode.classList.add('apod__image');
         imageNode.setAttribute('src', img);
-
         titleNode.before(imageNode);
       } else if (data.media_type === 'video') {
         const vidDivNode = helpersModule.el('div');
@@ -79,29 +78,29 @@ function saveCurrentImage() {
  *
  */
 export default function init(apod) {
-  document.getElementById('new-image-button').addEventListener('click', getNewImage);
-  document.getElementById('save-image-button').addEventListener('click', saveCurrentImage);
-  // document.body.getElementsByTagName('a')[0].addEventListener('click', loadFavourites);
+  apod.getElementById('new-image-button').addEventListener('click', getNewImage);
+  apod.getElementById('save-image-button').addEventListener('click', saveCurrentImage);
 }
 
 /*
  * Fall fyrir favourites.html. Sér um að sækja allar vistuðu myndirnar og birta þær ásamt
  * titlum þeirra.
  */
-export function loadFavourites() {  
+export function loadFavourites() {
   const savedMedia = storageModule.load();
 
-  let appendNode = document.querySelector('h1');  
+  const appendNode = document.querySelector('h1');
 
-  for (let n=0; n < savedMedia.length; n += 1) {         
+  for (let n = 0; n < savedMedia.length; n += 1) {
     const titleNode = helpersModule.el('h2');
-    titleNode.innerHTML = savedMedia[n][3];
+    const titleText = savedMedia[n][3];
+    titleNode.innerHTML = titleText;
 
     const imageNode = helpersModule.el('img');
     imageNode.classList.add('apod__image');
     imageNode.setAttribute('src', savedMedia[n][1]);
 
     appendNode.appendChild(titleNode);
-    appendNode.appendChild(imageNode);    
+    appendNode.appendChild(imageNode);
   }
 }

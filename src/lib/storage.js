@@ -16,20 +16,19 @@ const LOCALSTORAGE_KEY = 'favourite_spacephotos';
  */
 export function load() {
   // localStorage.clear();
-  console.log('localStorage', localStorage);
-
   const savedMedia = [];
 
   for (let n = 1; n <= localStorage.length; n += 1) {
-    const jsonString = localStorage.getItem(`${LOCALSTORAGE_KEY}-${n}`);
-    const mediaItem = JSON.parse(jsonString);
+    const mediaJSON = localStorage.getItem(`${LOCALSTORAGE_KEY}-${n}`);
+    const mediaObj = JSON.parse(mediaJSON);
 
-    console.log('loaded items', `${LOCALSTORAGE_KEY}-${n}`, jsonString, mediaItem);
+    const mediaItem = new Array(4);
+    mediaItem[0] = mediaObj.type;
+    mediaItem[1] = mediaObj.mediaUrl;
+    mediaItem[2] = mediaObj.text;
+    mediaItem[3] = mediaObj.title;
 
-    savedMedia[n][0] = mediaItem.type;
-    savedMedia[n][1] = mediaItem.mediaUrl;
-    savedMedia[n][2] = mediaItem.text;
-    savedMedia[n][3] = mediaItem.url;
+    savedMedia.push(mediaItem);
   }
 
   return savedMedia;
@@ -46,15 +45,9 @@ export function load() {
 export function save(type, mediaUrl, text, title) {
   const position = localStorage.length + 1;
 
-  // json example {"firstName":"John", "lastName":"Doe"},
-  localStorage.setItem(`${LOCALSTORAGE_KEY}-${position}`, `'mediaitem': {'type':'${type}','mediaUrl:'${mediaUrl}','text':"${text}", 'title':'${title}'}`);
+  const mediaJSON = `{"type": "${type}", "mediaUrl": "${mediaUrl}", "text": "${text}", "title": "${title}"}`;
+  localStorage.setItem(`${LOCALSTORAGE_KEY}-${position}`, mediaJSON);
 
-  /*
-  localStorage.setItem(`${LOCALSTORAGE_KEY}-type-${position}`, type);
-  localStorage.setItem(`${LOCALSTORAGE_KEY}-mediaUrl-${position}`, mediaUrl);
-  localStorage.setItem(`${LOCALSTORAGE_KEY}-text-${position}`, text);
-  localStorage.setItem(`${LOCALSTORAGE_KEY}-title-${position}`, title);
-  */
   console.log('Media saved to favorites.');
 }
 
