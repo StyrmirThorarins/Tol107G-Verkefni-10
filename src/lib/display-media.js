@@ -70,16 +70,20 @@ function getNewImage() {
  * Vistar núverandi mynd í storage.
  */
 function saveCurrentImage() {
-  storageModule.save(image.media_type, image.url, image.explanation, image.title);
+  if (image != null) {
+    storageModule.save(image.media_type, image.url, image.explanation, image.title);
+  } else {
+    console.log('You need to load media from NASA before attempting to save.');
+  }
 }
 
 /*
  * Upphafsstillir forsíðuna. Setur event listeners á takkana, og sækir eina mynd.
  *
  */
-export default function init(apod) {
-  apod.getElementById('new-image-button').addEventListener('click', getNewImage);
-  apod.getElementById('save-image-button').addEventListener('click', saveCurrentImage);
+export default function init() {
+  document.getElementById('new-image-button').addEventListener('click', getNewImage);
+  document.getElementById('save-image-button').addEventListener('click', saveCurrentImage);
 }
 
 /*

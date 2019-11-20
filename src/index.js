@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (isFavourites) {
     loadFavourites();
   } else {
-    const apod = document.querySelector('.apod');
-    init(apod);
+    // const apod = document.querySelector('.apod');
+    init();
   }
 });
