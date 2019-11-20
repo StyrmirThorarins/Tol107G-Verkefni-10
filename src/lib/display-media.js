@@ -71,23 +71,7 @@ function getNewImage() {
  * Vistar núverandi mynd í storage.
  */
 function saveCurrentImage() {
-  /*
-  let imagePath = '';
-  let title = '';
-  try {
-    imagePath = document.querySelector('.apod__image').getAttribute('src');
-    title = document.querySelector('.apod__title').innerHTML;    
-  } catch {
-    console.log('No image found. Possibly you tried to save a video.');
-  }
-*/
-  if (image.media_type === 'image') {    
-    localStorage.setItem(`apodImageUrl-${localStorage.length + 1}`, image.hdurl);
-    localStorage.setItem(`apodImageTitle-${localStorage.length + 1}`, image.title);
-    console.log('Image saved to favorites.')
-  } else if (image.media_type === 'video') {
-    console.log('Videos can not be saved to favorites.');
-  }
+  storageModule.save(image.media_type, image.url, image.explanation, image.title);
 }
 
 /*
@@ -105,21 +89,17 @@ export default function init(apod) {
  * titlum þeirra.
  */
 export function loadFavourites() {  
-  // localStorage.clear();
-  
+  const savedMedia = storageModule.load();
+
   let appendNode = document.querySelector('h1');  
 
-  for (let n=1; n <= localStorage.length; n += 1) {      
-    console.log(`apodImageUrl-${n}`, localStorage.getItem(`apodImageUrl-${n}`));        
-    console.log(`apodImageTitle-${n}`, localStorage.getItem(`apodImageTitle-${n}`));
-
-    
+  for (let n=0; n < savedMedia.length; n += 1) {         
     const titleNode = helpersModule.el('h2');
-    titleNode.innerHTML = localStorage.getItem(`apodImageTitle-${n}`);
+    titleNode.innerHTML = savedMedia[n][3];
 
     const imageNode = helpersModule.el('img');
     imageNode.classList.add('apod__image');
-    imageNode.setAttribute('src', localStorage.getItem(`apodImageUrl-${n}`));
+    imageNode.setAttribute('src', savedMedia[n][1]);
 
     appendNode.appendChild(titleNode);
     appendNode.appendChild(imageNode);    
