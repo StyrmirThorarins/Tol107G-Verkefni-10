@@ -16,6 +16,7 @@ const LOCALSTORAGE_KEY = 'favourite_spacephotos';
  */
 export function load() {
   // localStorage.clear();
+  console.log('localStorage: ', localStorage);
   const savedMedia = [];
 
   for (let n = 1; n <= localStorage.length; n += 1) {
