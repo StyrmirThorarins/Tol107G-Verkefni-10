@@ -100,11 +100,18 @@ export function loadFavourites() {
     const titleText = savedMedia[n][3];
     titleNode.innerHTML = titleText;
 
-    const imageNode = helpersModule.el('img');
-    imageNode.classList.add('apod__image');
-    imageNode.setAttribute('src', savedMedia[n][1]);
+    let mediaNode;
+
+    if (savedMedia[n][0] === 'image') {
+      mediaNode = helpersModule.el('img');
+      mediaNode.classList.add('apod__image');
+      mediaNode.setAttribute('src', savedMedia[n][1]);
+    } else if (savedMedia[n][0] === 'video') {
+      mediaNode = helpersModule.el('div');
+      mediaNode.innerHTML = `<iframe width='560' height='315' src='${savedMedia[n][1]}' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>`;
+    }
 
     appendNode.appendChild(titleNode);
-    appendNode.appendChild(imageNode);
+    appendNode.appendChild(mediaNode);
   }
 }
